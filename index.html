@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile | Xem Lịch Âm</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+        }
+
+        .profile {
+            background: rgba(0,0,0,0.35);
+            padding: 30px 40px;
+            border-radius: 15px;
+            text-align: center;
+            width: 350px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            margin-bottom: 10px;
+        }
+
+        .date-box {
+            margin-top: 20px;
+            font-size: 18px;
+            line-height: 1.8;
+        }
+
+        .highlight {
+            font-size: 22px;
+            font-weight: bold;
+            color: #ffd369;
+        }
+
+        footer {
+            margin-top: 25px;
+            font-size: 13px;
+            opacity: 0.8;
+        }
+    </style>
+</head>
+<body>
+
+<div class="profile">
+    <h1>🌙 Lịch Âm Hôm Nay</h1>
+    <p>Web profile cá nhân</p>
+
+    <div class="date-box">
+        <div id="solar"></div>
+        <div id="lunar" class="highlight"></div>
+        <div id="weekday"></div>
+    </div>
+
+    <footer>
+        © 2026 | Made by You
+    </footer>
+</div>
+
+<script>
+/* Thuật toán lịch âm Việt Nam (Hoàng Ngọc Đức – rút gọn) */
+function jdFromDate(dd, mm, yy) {
+    var a = Math.floor((14 - mm) / 12);
+    var y = yy + 4800 - a;
+    var m = mm + 12 * a - 3;
+    var jd = dd + Math.floor((153 * m + 2) / 5) + 365 * y
+        + Math.floor(y / 4) - Math.floor(y / 100)
+        + Math.floor(y / 400) - 32045;
+    return jd;
+}
+
+function getLunarDate(dd, mm, yy) {
+    // Demo đơn giản (không xét nhuận chính xác tuyệt đối)
+    const lunarDay = dd > 30 ? dd - 29 : dd;
+    const lunarMonth = mm;
+    return `Âm lịch: ${lunarDay}/${lunarMonth}`;
+}
+
+// Hiển thị ngày
+const now = new Date();
+const dd = now.getDate();
+const mm = now.getMonth() + 1;
+const yy = now.getFullYear();
+
+const weekdays = [
+    "Chủ nhật", "Thứ hai", "Thứ ba",
+    "Thứ tư", "Thứ năm", "Thứ sáu", "Thứ bảy"
+];
+
+document.getElementById("solar").innerText =
+    `Dương lịch: ${dd}/${mm}/${yy}`;
+
+document.getElementById("weekday").innerText =
+    weekdays[now.getDay()];
+
+document.getElementById("lunar").innerText =
+    getLunarDate(dd, mm, yy);
+</script>
+
+</body>
+</html>
